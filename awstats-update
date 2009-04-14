@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# This script can be used as cronjob in replace in the file ``/etc/cron.d/awstats``::
+#   
+#   # 0,10,20,30,40,50 * * * * root /etc/awstats/awstats-update > /dev/null
+#   www-data [ -x /usr/lib/cgi-bin/awstats.pl -a -f /etc/awstats/awstats.conf \
+#     -a -r /var/log/apache/access.log ] && /usr/lib/cgi-bin/awstats.pl \ 
+#     -config=awstats -update >/dev/null
+
+[ -f /etc/awstats/awstats.conf ] && /usr/lib/cgi-bin/awstats.pl -config=awstats -update >/dev/null
+for cfg in `find /etc/awstats -name 'awstats.*.conf' -printf '%f\n' | sed 's/^awstats\.\(.*\)\.conf/\1/'`; do
+    /usr/lib/cgi-bin/awstats.pl -config=$cfg -update 
+    #>/dev/null
+done
+
