@@ -1,0 +1,5 @@
+These scripts can be used as cronjob as folling:
+
+  0,10,20,30,40,50 * * * * root   python /etc/awstats/scripts/auto-generator.py
+  0,11,21,31,41,51 * * * * root   /etc/awstats/awstats-update > /dev/null
+
